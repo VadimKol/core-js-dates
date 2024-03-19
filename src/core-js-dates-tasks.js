@@ -101,9 +101,17 @@ function getNextFriday(date) {
  */
 function getCountDaysInMonth(month, year) {
   let numberOfDays = 0;
+
+  function isLeap(y) {
+    if (!(y % 400)) return true;
+    if (!(y % 100)) return false;
+    if (!(y % 4)) return true;
+    return false;
+  }
+
   switch (month) {
     case 2:
-      numberOfDays = !(year % 4) ? 29 : 28;
+      numberOfDays = isLeap(year) ? 29 : 28;
       break;
     case 1:
     case 3:
@@ -401,8 +409,11 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  if (!(date.getFullYear() % 400)) return true;
+  if (!(date.getFullYear() % 100)) return false;
+  if (!(date.getFullYear() % 4)) return true;
+  return false;
 }
 
 module.exports = {
