@@ -79,10 +79,12 @@ function getDayName(date) {
 function getNextFriday(date) {
   const currentDayOfTheWeek = date.getDay();
   let nextFriday = 0;
+
   if (currentDayOfTheWeek === 6) nextFriday = 6;
   else if (currentDayOfTheWeek === 5) nextFriday = 7;
   else nextFriday = 5 - currentDayOfTheWeek;
-  date.setDate(currentDayOfTheWeek + nextFriday);
+
+  date.setDate(date.getDate() + nextFriday);
   return date;
 }
 
