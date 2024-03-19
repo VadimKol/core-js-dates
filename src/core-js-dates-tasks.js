@@ -232,8 +232,51 @@ function getCountWeekendsInMonth(month, year) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(/* date */) {
-  throw new Error('Not implemented');
+function getWeekNumberByDate(date) {
+  let weekNumber = 0;
+  const startDayOfTheWeekInJanuary = new Date(date.getFullYear(), 0).getDay();
+  let n = date.getMonth() + 1;
+  let days = date.getDate();
+  n -= 1;
+  while (n >= 1) {
+    days += getCountDaysInMonth(n, date.getFullYear());
+    n -= 1;
+  }
+  if (
+    startDayOfTheWeekInJanuary === 0 ||
+    startDayOfTheWeekInJanuary === 5 ||
+    startDayOfTheWeekInJanuary === 6
+  ) {
+    if (
+      (startDayOfTheWeekInJanuary === 0 &&
+        !(
+          date.getMonth() === 0 &&
+          date.getDate() === 1 &&
+          date.getDay() === 0
+        )) ||
+      (startDayOfTheWeekInJanuary === 6 &&
+        !(
+          (date.getMonth() === 0 &&
+            date.getDate() === 1 &&
+            date.getDay() === 6) ||
+          (date.getMonth() === 0 && date.getDate() === 2 && date.getDay() === 0)
+        )) ||
+      (startDayOfTheWeekInJanuary === 5 &&
+        !(
+          (date.getMonth() === 0 &&
+            date.getDate() === 1 &&
+            date.getDay() === 5) ||
+          (date.getMonth() === 0 &&
+            date.getDate() === 2 &&
+            date.getDay() === 6) ||
+          (date.getMonth() === 0 && date.getDate() === 3 && date.getDay() === 0)
+        ))
+    ) {
+      weekNumber += 1;
+    }
+  }
+  weekNumber += days % 7 ? Math.floor(days / 7) + 1 : Math.floor(days / 7);
+  return weekNumber;
 }
 
 /**
